@@ -1,10 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-
-
-
 # # <center> Co2 Capturing <br> <br>    <font size='4'>$\color{purple}{\text{Mahmoud Maheri}}$
 # 
 # 
@@ -82,10 +78,7 @@ plt.rcParams['image.interpolation'] = 'spline16'
 pd.options.display.float_format = "{:.4f}".format
 #InteractiveShell.ast_node_interactivity = "last_expr"
 
-
-# In[2]:
-
-
+# In[254]:
 
 warnings.filterwarnings("ignore")
 InteractiveShell.ast_node_interactivity = "all"
@@ -105,8 +98,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 # # Importing Dataset
 
-
-# In[3]:
+# In[255]:
 
 
 # Dataset imported, and a copy has been generated for future feature utilization.
@@ -116,7 +108,7 @@ BWDPSf=df.copy()
 BWDPSm=df.copy()
 
 
-# In[4]:
+# In[256]:
 
 
 # Extracting Initial Insights from the Dataset
@@ -144,8 +136,7 @@ df_secondf.describe().transpose()
 
 # # Distribution and analysing dataset
 
-
-# In[5]:
+# In[257]:
 
 
 # Exploring Data Distribution through Analysis and Visualization
@@ -160,7 +151,7 @@ BWDPSf.plot(subplots=True,
 plt.show()
 
 
-# In[6]:
+# In[258]:
 
 
 #disribution of the primary dataset
@@ -170,7 +161,7 @@ BWDPSf.plot(kind='density',subplots=True,layout=(4, 3), figsize=(22,22),
 plt.show()
 
 
-# In[7]:
+# In[259]:
 
 
 #CO2 uptake by box plot for the primary dataset
@@ -179,7 +170,7 @@ fig = px.box(BWDPSf, y="CO2 uptake (mmol/g)")
 fig.show()
 
 
-# In[8]:
+# In[260]:
 
 
 #This code creates a pair of plots using matplotlib and seaborn. 
@@ -207,14 +198,14 @@ ax_box.set(xlabel='')
 plt.show()
 
 
-# In[9]:
+# In[261]:
 
 
 df_first1=BWDPSf[:193]
 df_first2=BWDPSf[193:]
 
 
-# In[10]:
+# In[262]:
 
 
 # BWDPSf["CO2 uptake (mmol/g)"]
@@ -247,7 +238,7 @@ def density_features_manual(dataset, feature_name):
     plt.show()
 
 
-# In[11]:
+# In[263]:
 
 
 def density_features(dataset, feature_name='Surface Area (m2/g)'):
@@ -283,19 +274,19 @@ def density_features(dataset, feature_name='Surface Area (m2/g)'):
 # Example usage
 
 
-# In[12]:
+# In[264]:
 
 
 density_features_manual(BWDPSf, 'CO2 uptake (mmol/g)') 
 
 
-# In[13]:
+# In[265]:
 
 
 density_features(BWDPSf, 'CO2 uptake (mmol/g)') 
 
 
-# In[14]:
+# In[266]:
 
 
 fig = px.violin(BWDPS, y="CO2 uptake (mmol/g)", x="Temp (°C)",
@@ -303,7 +294,7 @@ fig = px.violin(BWDPS, y="CO2 uptake (mmol/g)", x="Temp (°C)",
 fig.show()
 
 
-# In[15]:
+# In[267]:
 
 
 fig = px.violin(BWDPS, y="CO2 uptake (mmol/g)", x="Pressure (bar)", 
@@ -311,7 +302,7 @@ fig = px.violin(BWDPS, y="CO2 uptake (mmol/g)", x="Pressure (bar)",
 fig.show()
 
 
-# In[16]:
+# In[268]:
 
 
 #effect of adsorption in different presures
@@ -332,8 +323,7 @@ fig.show()
 
 # ## relative importance of features
 
-
-# In[17]:
+# In[269]:
 
 
 #relative importance of features
@@ -348,7 +338,7 @@ df_results=df_results.sort_values('normRelaImpt',ascending=False)
 df_results
 
 
-# In[18]:
+# In[270]:
 
 
 #plt.plot(df_results['normRelaImpt'])
@@ -357,8 +347,7 @@ plt.plot(sorted(df_results['normRelaImpt']))
 
 # # initial data processing of primary dataset
 
-
-# In[19]:
+# In[271]:
 
 
 def missing_values(dataset):
@@ -376,14 +365,14 @@ def print_missing_values(dataset):
     print()
 
 
-# In[20]:
+# In[272]:
 
 
 # BWDPS is the primary dataset
 missing_values(BWDPS)
 
 
-# In[21]:
+# In[273]:
 
 
 def imputation(dataset, target):
@@ -423,21 +412,21 @@ def imputation(dataset, target):
     return dataset
 
 
-# In[22]:
+# In[274]:
 
 
 #BWDPS_poly is dataset that missing values will be filled by three order Newton interpolation 
 BWDPS_poly=BWDPS.copy()
 
 
-# In[23]:
+# In[275]:
 
 
 imputation(BWDPS, "Total Pore Volume(cm3/g)")
 imputation(BWDPS, "Micropore Volume (cm3/g)")
 
 
-# In[24]:
+# In[276]:
 
 
 #dropping imputed columns
@@ -445,20 +434,20 @@ BWDPS["Total Pore Volume(cm3/g)"] = BWDPS["Total Pore Volume(cm3/g)"].fillna(BWD
 BWDPS["Micropore Volume (cm3/g)"] = BWDPS["Micropore Volume (cm3/g)"].fillna(BWDPS["Micropore Volume (cm3/g)_imputed"])
 
 
-# In[25]:
+# In[277]:
 
 
 #BWDPSs is the primary dataset that Sulphur feature is kept
 BWDPSs = BWDPS.drop(['Total Pore Volume(cm3/g)_imputed','Micropore Volume (cm3/g)_imputed'], axis = 1)
 
 
-# In[26]:
+# In[278]:
 
 
 BWDPS = BWDPSs.drop(['S (%)'], axis = 1)
 
 
-# In[27]:
+# In[279]:
 
 
 # BWDPS_poly is the dataset which missing values will be filled using Newton's three order interpolation method
@@ -470,8 +459,7 @@ BWDPS_poly
 # 
 # Also, We applied Newton three oreder interpolation for imputation.
 
-
-# In[28]:
+# In[280]:
 
 
 def _poly_newton_coefficient(x, y):
@@ -503,7 +491,8 @@ def newton_polynomial(x_data, y_data, x):
     return p
 
 
-# In[29]:
+# In[281]:
+
 
 
 def poly_imputation(dataset, target):
@@ -580,26 +569,26 @@ def poly_imputation(dataset, target):
     return dataset
 
 
-# In[30]:
+# In[282]:
 
 
 poly_imputation(BWDPS_poly, 'Micropore Volume (cm3/g)')
 
 
-# In[31]:
+# In[283]:
 
 
 poly_imputation(BWDPS_poly,"Total Pore Volume(cm3/g)")
 
 
-# In[32]:
+# In[284]:
 
 
 BWDPS_poly=BWDPS_poly.drop(['Total Pore Volume(cm3/g)_poly_imputed','Micropore Volume (cm3/g)_poly_imputed'],axis=1)
 BWDPS_poly
 
 
-# In[33]:
+# In[285]:
 
 
 #some new datasets
@@ -628,7 +617,25 @@ df_original= BWDPS
 df_original_shuffled=df_original.sample(frac=1)
 
 
-# In[34]:
+# # Functions for traing datasets
+
+# ## Machine learning function
+
+# import inspect
+
+# def print_current_line():
+#     current_frame = inspect.currentframe()
+#     file_name = current_frame.f_globals["__file__"]
+#     line_no = current_frame.f_lineno
+#     print(f"Running {file_name} at line number {line_no}")
+
+# # Testing the function
+# print_current_line()
+
+
+
+
+# In[286]:
 
 
 def primary_code(dataset,n,size,case):
@@ -755,7 +762,8 @@ def primary_code(dataset,n,size,case):
     plt.show()
 
 
-# In[35]:
+# In[287]:
+
 
 
 def primary_code_s(dataset,n,size,case):
@@ -885,7 +893,7 @@ def primary_code_s(dataset,n,size,case):
     plt.show()
 
 
-# In[36]:
+# In[288]:
 
 
 def primary_code2(dataset,n,size,case):
@@ -1013,7 +1021,7 @@ def primary_code2(dataset,n,size,case):
     plt.show()
 
 
-# In[37]:
+# In[289]:
 
 
 def primary_code_latex(data,n,k,size):
@@ -1140,8 +1148,9 @@ def primary_code_latex(data,n,k,size):
 
 # ## Deep learning functions
 
+# In[290]:
 
-# In[38]:
+
 
 
 os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
@@ -1228,59 +1237,68 @@ def deep_conv2(dataset, test_size, lr, batch_size):
     return score, scoretr, std
 
 
-## results of applying functions on the datasets
+# ## results of applying functions on the datasets
 
-
-# In[39]:
+# In[291]:
 
 
 # results achived by the Yaun and his collegues 
 primary_code(BWDPS,0,.2,1)
 
 
-# In[40]:
+# In[292]:
 
 
 primary_code_s(BWDPS,0,.2,1)
 
 
-# In[41]:
+# In[293]:
 
 
 primary_code2(BWDPS,0,.2,1)
 
 
-# In[42]:
+# In[294]:
 
 
 primary_code_latex(BWDPS, 0, 5, 0.2)
 
 
-# In[43]:
+# In[ ]:
+
+
+
 
 
 # ## results of applying deep learning on intial cleaned data sets
 
-
-# In[44]:
-
-
-#deep_conv2(BWDPS, 0.15, 0.001, 16)
+# In[295]:
 
 
-# In[45]:
+deep_conv2(BWDPS, 0.15, 0.001, 16)
 
 
-#deep_conv2(shuffle(BWDPS), 0.15, 0.001, 16)
+# In[296]:
 
 
-# In[46]:
+deep_conv2(shuffle(BWDPS), 0.15, 0.001, 16)
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
 
 
 # # Cleaning and preparation of the datasets
 
-
-# In[47]:
+# In[297]:
 
 
 #uncomment next line if you want to use imputed data set with Newton's second corder polynomial
@@ -1289,15 +1307,14 @@ primary_code_latex(BWDPS, 0, 5, 0.2)
 
 # ## Checking and removing duplicated data
 
-
-# In[48]:
+# In[298]:
 
 
 dfk=BWDPS.copy()
 dfk['Temp (°C)']=dfk['Temp (°C)']+273.15
 
 
-# In[49]:
+# In[299]:
 
 
 def duplicat_row(dataset):
@@ -1313,13 +1330,13 @@ duplicate
 #df = df.drop_duplicates()
 
 
-# In[50]:
+# In[300]:
 
 
 df0=BWDPS.copy()
 
 
-# In[51]:
+# In[301]:
 
 
 df0.drop(208,axis=0,inplace=True)
@@ -1327,9 +1344,7 @@ df0.reset_index(drop=True, inplace=True)
 df0
 
 
-# In[52]:
-
-
+# In[302]:
 
 
 dfs=BWDPSs
@@ -1342,14 +1357,13 @@ dfs_second=BWDPSs[193:]
 
 # ## Checking for missing values
 
-
-# In[53]:
+# In[303]:
 
 
 msno.bar(df0, figsize=(12, 6), fontsize=12, color='steelblue')
 
 
-# In[54]:
+# In[304]:
 
 
 def missing_values(dataset):
@@ -1359,7 +1373,7 @@ def missing_values(dataset):
     return missing
 
 
-# In[55]:
+# In[305]:
 
 
 print()
@@ -1370,8 +1384,7 @@ print()
 
 # ## Checking for zero values
 
-
-# In[56]:
+# In[306]:
 
 
 def zeros_check(data):
@@ -1387,7 +1400,7 @@ zeros_check(BWDPS)
     
 
 
-# In[57]:
+# In[307]:
 
 
 table_1 = Texttable()
@@ -1408,11 +1421,10 @@ print(latextable.draw_latex(table_1, caption="An example table.", label="table:e
 
 # ## Replacing zero values
 
+# In[308]:
 
-# In[58]:
 
-
-# we have two primary df0 and df datasets
+# we are going to have two primary df0 and df datasets
 #df0 will be the dataset which temperature zeros are left unchanged and df will be dataset which it's zero going 
 #to fill out by different methods
 #other features zeros will be replaced in both datasets
@@ -1421,7 +1433,7 @@ dfs0=dfs.copy()
 df
 
 
-# In[59]:
+# In[309]:
 
 
 dfs['Total Pore Volume(cm3/g)']=BWDPS['Total Pore Volume(cm3/g)']
@@ -1440,7 +1452,7 @@ df0['O (%)']=df0['O (%)'].replace(0,np.NaN)#df['H (%)'].mean())
 df0['O (%)']=df0['O (%)'].interpolate(method ='pad', limit_direction ='forward')
 
 
-# In[60]:
+# In[310]:
 
 
 df['H (%)']=df['H (%)'].replace(0,np.NaN)#df['H (%)'].mean())
@@ -1461,7 +1473,7 @@ dfs['Temp (°C)']=dfs['Temp (°C)'].replace(0,dfs['Temp (°C)'].mean())
 dfs['S (%)']=dfs['S (%)'].replace(0,BWDPSs['S (%)'].mean())
 
 
-# In[61]:
+# In[311]:
 
 
 #effect of replacing temperature zeros
@@ -1479,8 +1491,7 @@ plt.show()
 
 # ## copies of primary datasets
 
-
-# In[62]:
+# In[312]:
 
 
 mdf=df.copy()
@@ -1524,22 +1535,22 @@ ds0=df0.copy()
 
 # ## Checking the correlation between features
 
-
-# In[63]:
+# In[313]:
 
 
 corr_matrix=df.corr()
 corr_matrix.sort_values(ascending=False,by='CO2 uptake (mmol/g)')
 
 
-# In[64]:
+# In[314]:
 
 
 #InteractiveShell.ast_node_interactivity = "all"
 InteractiveShell.ast_node_interactivity = "last_expr"
 
 
-# In[65]:
+# In[315]:
+
 
 
 plt.figure(figsize=(8,6),dpi=100);
@@ -1548,7 +1559,7 @@ scatter_matrix(df[featuers],figsize=(12,8),cmap='blue');
 #plt.show();
 
 
-# In[66]:
+# In[316]:
 
 
 plt.figure(figsize=(8,6),dpi=100);
@@ -1556,14 +1567,23 @@ featuers=['Total Pore Volume(cm3/g)','Micropore Volume (cm3/g)','CO2 uptake (mmo
 scatter_matrix(df0[featuers],figsize=(12,8),cmap='blue');
 
 
-# In[67]:
+# In[317]:
 
 
 df['Temp (°C)'].unique()
 df['Temp (°C)'].value_counts()
 
 
-# In[69]:
+# In[318]:
+
+
+df['Pressure (bar)'].value_counts()
+
+
+# ## correlation matrix and p-values
+
+# In[319]:
+
 
 
 def calculate_pvalues(dataset):
@@ -1580,13 +1600,13 @@ def calculate_pvalues(dataset):
     return pvalues
 
 
-# In[70]:
+# In[320]:
 
 
 calculate_pvalues(BWDPS) 
 
 
-# In[71]:
+# In[321]:
 
 
 def corr_heat(dataset):
@@ -1604,19 +1624,19 @@ def corr_heat(dataset):
     
 
 
-# In[72]:
+# In[322]:
 
 
 corr_heat(df_first)
 
 
-# In[73]:
+# In[323]:
 
 
 corr_heat(df_second)
 
 
-# In[74]:
+# In[324]:
 
 
 def P_OLS_all(dataset):
@@ -1632,13 +1652,13 @@ def P_OLS_all(dataset):
     print(est2.summary())
 
 
-# In[75]:
+# In[325]:
 
 
 P_OLS_all(BWDPS)
 
 
-# In[76]:
+# In[326]:
 
 
 def p_value_data0(dataset): 
@@ -1680,14 +1700,16 @@ def p_value_data0(dataset):
     return DF
 
 
-# In[77]:
+# In[327]:
 
 
 DF=p_value_data0(BWDPS)
 DF
 
 
-# In[78]:
+# In[328]:
+
+
 
 
 def p_value_data(dataset):
@@ -1732,14 +1754,15 @@ def p_value_data(dataset):
     return DF
 
 
-# In[79]:
+# In[329]:
 
 
 p_value_data(df_first)
+
+
 # ## Partial dependence of features respect to co2 adsorption
 
-
-# In[80]:
+# In[330]:
 
 
 def PDP_co2(dataset,i):
@@ -1785,7 +1808,7 @@ def PDP_co2(dataset,i):
     plt.show()
 
 
-# In[81]:
+# In[331]:
 
 
 def PDP_shap_co2(dataset,i,j):
@@ -1813,13 +1836,13 @@ def PDP_shap_co2(dataset,i,j):
         model_expected_value=True, feature_expected_value=True)
 
 
-# In[82]:
+# In[332]:
 
 
 PDP_shap_co2(BWDPS,2,1)
 
 
-# In[83]:
+# In[333]:
 
 
 BWDPS_shuffled=shuffle(BWDPS)
@@ -1828,8 +1851,7 @@ PDP_shap_co2(BWDPS_shuffled,2,1)
 
 # ## Adding new possible featuers
 
-
-# In[84]:
+# In[334]:
 
 
 df['Surfacem2/TotalPor(cm3)']=df['Surface Area (m2/g)']/df['Total Pore Volume(cm3/g)']
@@ -1882,13 +1904,13 @@ print('new shape of data set is: ', df.shape)
 df.head(5)
 
 
-# In[85]:
+# In[335]:
 
 
 zeros_check(df0)
 
 
-# In[86]:
+# In[336]:
 
 
 df0['Surfacem2/TotalPor(cm3)']=df0['Surface Area (m2/g)']/df0['Total Pore Volume(cm3/g)']
@@ -1943,8 +1965,7 @@ df0.head(5)
 
 # ## Correlation between target and all othert features
 
-
-# In[87]:
+# In[337]:
 
 
 def correlation_matrix(dataset):
@@ -1959,13 +1980,13 @@ def correlation_matrix(dataset):
     print(aa.to_latex(index=True))
 
 
-# In[88]:
+# In[338]:
 
 
 correlation_matrix(df)
 
 
-# In[89]:
+# In[339]:
 
 
 BWDPS_38=df0.copy()
@@ -1976,8 +1997,7 @@ print(BWDPS_46.shape)
 
 # ## Removing high and low correlated features to target and feature selection
 
-
-# In[90]:
+# In[340]:
 
 
 def remove_high_corr_features(dataset):
@@ -1995,9 +2015,7 @@ def remove_high_corr_features(dataset):
     print('dataset fetures after removing high correlated ones:\n',dataset.columns)
 
 
-# In[91]:
-
-
+# In[341]:
 
 
 remove_high_corr_features(df)
@@ -2005,8 +2023,7 @@ remove_high_corr_features(df)
 
 # ## important feature  selection for zero values filled up temperature feature
 
-
-# In[92]:
+# In[342]:
 
 
 def importance_features(dataset):
@@ -2054,20 +2071,22 @@ def importance_features(dataset):
      
 
 
-# In[93]:
+# In[343]:
 
 
 features_BWDPS_46,imp_sorted_index=importance_features(BWDPS_46)
 
 
-# In[94]:
+# In[344]:
 
 
 importance_features(BWDPS_38)
+
+
 # ## mutual information
 
+# In[345]:
 
-# In[95]:
 
 
 # Utility functions from Tutorial
@@ -2100,7 +2119,7 @@ def plot_mi_scores(scores):
     plt.title("Mutual Information Scores")
 
 
-# In[96]:
+# In[346]:
 
 
 # Set Matplotlib defaults
@@ -2123,7 +2142,7 @@ sns.relplot( x="value", y="CO2 uptake (mmol/g)", col="variable",
             data=BWDPS_46.melt(id_vars="CO2 uptake (mmol/g)", value_vars=features2), facet_kws=dict(sharex=False),);
 
 
-# In[97]:
+# In[347]:
 
 
 x = BWDPS_46.copy()
@@ -2133,7 +2152,7 @@ mi_scores = make_mi_scores(x, y)
 mi_scores[:10]
 
 
-# In[98]:
+# In[348]:
 
 
 #plt.plot(mi_scores[:10])
@@ -2147,7 +2166,7 @@ x_mu=dsm
 x_mu
 
 
-# In[99]:
+# In[349]:
 
 
 #plt.figure(figsize=(20,16),dpi=150)
@@ -2155,7 +2174,7 @@ g=sns.catplot(x="Pressure (bar)", y="CO2 uptake (mmol/g)", data=BWDPS_46, kind="
 g.fig.set_size_inches(8,6)
 
 
-# In[100]:
+# In[350]:
 
 
 #plt.figure(figsize=(20,16),dpi=150)
@@ -2163,7 +2182,7 @@ g=sns.catplot(x="Temp (°C)", y="CO2 uptake (mmol/g)", data=BWDPS_46, kind="stri
 g.fig.set_size_inches(8,6)
 
 
-# In[101]:
+# In[351]:
 
 
 #plt.figure(figsize=(20,16),dpi=150)
@@ -2171,7 +2190,7 @@ g=sns.catplot(x="C (%)", y="CO2 uptake (mmol/g)", data=BWDPS_46, kind="boxen");
 g.fig.set_size_inches(8,6)
 
 
-# In[102]:
+# In[352]:
 
 
 feature = "Pressure (bar)"
@@ -2182,7 +2201,7 @@ sns.lmplot(
 );
 
 
-# In[103]:
+# In[353]:
 
 
 feature = "Temp (°C)"
@@ -2195,8 +2214,7 @@ sns.lmplot(
 
 # ## Outliers checking
 
-
-# In[104]:
+# In[354]:
 
 
 plt.figure(figsize=(8,6),dpi=200);
@@ -2255,7 +2273,7 @@ Q43 = ds0['Pressure (bar)'].quantile(0.95)
 IQR4 = Q43 - Q41
 
 
-# In[105]:
+# In[355]:
 
 
 new_df = ds0[
@@ -2306,8 +2324,7 @@ plt.show()
 
 # # dataset after adding newfeature and feature selection
 
-
-# In[106]:
+# In[356]:
 
 
 def split_datasets(dataset,size):
@@ -2325,7 +2342,7 @@ def split_datasets(dataset,size):
     return df_train,df_test,df_label,df_test_label
 
 
-# In[107]:
+# In[357]:
 
 
 features_BWDPS_46,imp_sorted_index=importance_features(BWDPS_46)
@@ -2338,7 +2355,7 @@ x3=dff.drop(['CO2 uptake (mmol/g)'],axis=1)
 y3=BWDPS_46['CO2 uptake (mmol/g)']
 
 
-# In[108]:
+# In[358]:
 
 
 features_BWDPS_38,imp_sorted_index0=importance_features(BWDPS_38)
@@ -2354,8 +2371,7 @@ y4=BWDPS_38['CO2 uptake (mmol/g)']
 # ## recrussive feature selection
 # 
 
-
-# In[109]:
+# In[359]:
 
 
 #gbr=GradientBoostingRegressor(n_estimators=80)
@@ -2418,15 +2434,19 @@ def rfecv_feature(dataset,n,t):
     print("The mean r2-scores are:")
     for name, score in sorted(mean_score.items(), key=lambda item: item[1]):
       print(str(name)+" features:\t", score)
+        
+    
+    
+ 
 
 
-# In[110]:
+# In[360]:
 
 
 #rfecv_feature(BWDPS_38,4,0)
 
 
-# In[111]:
+# In[361]:
 
 
 def rfecv_sel(dataset,n):
@@ -2479,49 +2499,49 @@ def rfecv_sel(dataset,n):
     return xr,yr,X_new_df
 
 
-# In[112]:
+# In[362]:
 
 
 #xrs01,yrs01,X_new_dfs01=rfecv_sel(BWDPS_38,1)
 
 
-# In[113]:
+# In[363]:
 
 
 #X_new_dfs01
 
 
-# In[114]:
+# In[364]:
 
 
 #xrs04,yrs04,X_new_dfs04=rfecv_sel(BWDPS_38,4)
 
 
-# In[115]:
+# In[365]:
 
 
 #xrs1,yrs1,X_new_dfs1=rfecv_sel(BWDPS_46,1)
 
 
-# In[116]:
+# In[366]:
 
 
 #X_new_dfs1
 
 
-# In[117]:
+# In[367]:
 
 
 #xrs4,yrs4,X_new_dfs4=rfecv_sel(BWDPS_46,4)
 
 
-# In[118]:
+# In[368]:
 
 
 #X_new_dfs4
 
 
-# In[119]:
+# In[369]:
 
 
 #some new datasets
@@ -2548,8 +2568,7 @@ dff0_shuffled = shuffle(dff0)
 
 # # Comparison of performance of different models with different scalers
 
-
-# In[120]:
+# In[370]:
 
 
 def com_per_models(dataset):
@@ -2596,19 +2615,19 @@ def com_per_models(dataset):
     return df_res0
 
 
-# In[121]:
+# In[371]:
 
 
 #df_res0=com_per_models(df_first)
 
 
-# In[122]:
+# In[372]:
 
 
 #df_res0=com_per_models(df_second)
 
 
-# In[123]:
+# In[373]:
 
 
 def skew_map(data):
@@ -2623,22 +2642,22 @@ def skew_map(data):
         print(df_check.skew())
 
 
-# In[124]:
+# In[374]:
 
 
 skew_map(df_first)
 
+
 # ## Scaler effect
 
-
-# In[125]:
+# In[375]:
 
 
 p=sns.displot(BWDPS, kind="kde")
 p.fig.set_dpi(200)
 
 
-# In[126]:
+# In[376]:
 
 
 BWDPS_scaled = StandardScaler().fit_transform(BWDPS)
@@ -2659,7 +2678,8 @@ plt.show()
 # ## modified GBR on first set of collected original dataset
 
 
-# In[127]:
+
+# In[378]:
 
 
 def best_par_gbr(data,size):
@@ -2695,7 +2715,7 @@ def best_par_gbr(data,size):
     return results,df_scores
 
 
-# In[128]:
+# In[379]:
 
 
 def best_par_gbr2(dataset,fold,size):
@@ -2743,13 +2763,13 @@ def best_par_gbr2(dataset,fold,size):
     return results,df_scores
 
 
-# In[129]:
+# In[380]:
 
 
 #results,df_scores=best_par_gbr2(dff_shuffled,5,.15)
 
 
-# In[130]:
+# In[381]:
 
 
 # max(df_scores.loc[0])
@@ -2760,8 +2780,7 @@ def best_par_gbr2(dataset,fold,size):
 
 # ## Functions for compare
 
-
-# In[131]:
+# In[382]:
 
 
 dff2=dff
@@ -2798,7 +2817,7 @@ dff02.shape
 dff02_shuffled = shuffle(dff02)
 
 
-# In[132]:
+# In[383]:
 
 
 def generate_short_names(names, length=3):
@@ -2813,7 +2832,13 @@ def generate_short_names(names, length=3):
     return short_names
 
 
-# In[134]:
+# In[384]:
+
+
+BWDPS
+
+
+# In[390]:
 
 
 def loss_GBR_ML(data, size):
@@ -2876,38 +2901,40 @@ def loss_GBR_ML(data, size):
     plt.show()
 
 
-# In[135]:
+# In[391]:
 
 
 loss_GBR_ML(BWDPS,.15)
 
 
-# In[136]:
+# In[392]:
 
 
 loss_GBR_ML(BWDPS_shuffled,.15)
 
 
-# In[137]:
+# In[393]:
 
 
 loss_GBR_ML(BWDPS_46_shuffled,.15)
 
 
-# In[138]:
+# In[394]:
 
 
 loss_GBR_ML(BWDPS_38_shuffled,.15)
 
 
-# In[139]:
+
+
+# In[141]:
 
 
 dff2['Micropore Volume (cm3/g)']=BWDPS_46['Micropore Volume (cm3/g)']
 dff2_shuffled = shuffle(dff2)
 
 
-# In[140]:
+# In[142]:
 
 
 def N_par_gbr(dataset,fold,size,n):
@@ -2961,13 +2988,13 @@ def N_par_gbr(dataset,fold,size,n):
     return results0,results20,df_scores0,df_scores20
 
 
-# In[141]:
+# In[143]:
 
 
 # N_par_gbr(dff2,7,.15,10)
 
 
-# In[142]:
+# In[144]:
 
 
 def pressure_par_gbr(dataset,fold,size,n):
@@ -3021,7 +3048,7 @@ def pressure_par_gbr(dataset,fold,size,n):
     return results0,results20,df_scores0,df_scores20
 
 
-# In[143]:
+# In[145]:
 
 
 def pressure_par_gbr_added(dataset,fold,size,n):
@@ -3072,7 +3099,7 @@ def pressure_par_gbr_added(dataset,fold,size,n):
     return results,results2,df_scores,df_scores2
 
 
-# In[144]:
+# In[146]:
 
 
 def pressure_par_gbr2(dataset,fold,size):
@@ -3133,7 +3160,9 @@ def pressure_par_gbr2(dataset,fold,size):
     return results,results2,df_scores,df_scores2,resultsp,resultst,resultsm
 
 
-# In[145]:
+
+# In[147]:
+
 
 
 def evaluate_model(dataset, model,cv,split):
@@ -3167,7 +3196,7 @@ def evaluate_model(dataset, model,cv,split):
  
 
 
-# In[146]:
+# In[148]:
 
 
 # plot the dataset and the model's line of best fit
@@ -3194,12 +3223,51 @@ def plot_best_fit(dataset, model):
 
 
 
-# In[148]:
+
+# In[151]:
+
+
+data = {'Deep learning models': ['MLP1', 'MLP2', 'BWDPS_46', 'CNN'],
+        'Train set': [88.55,88.89,74.26,94.7],
+        'Test  set': [85.67,84.18,64.45,85.73],
+        'STD': [3.8,2.5,1.8,0.94]
+        }
+
+# data1['Train R2']=np.array(data['Train R2'][:11])
+# data1['Test R2']=np.array(data['Test R2'][:11])
+# data=pd.DataFrame(data1)
+# data=data1[['Test R2','Train R2']]
+data=pd.DataFrame(data)
+data
+df45=data.melt(['Deep learning models'])
+df45
+
+color = sns.color_palette('tab20')
+
+fig, ax = plt.subplots(figsize=(10,8),dpi=250)
+sns.barplot(data=df45, y="value", x='Deep learning models',hue='variable')
+ax.set_ylabel('r$^2$ score')
+
+for i in ax.containers:
+    ax.bar_label(i,)
+
+# ax.bar_label(ax.containers[0])
+# ax.bar_label(ax.containers[1])
+
+
+# # Applying neural networks 
+
+
+# In[395]:
+
 
 
 from keras import backend as K
+
+
 from tensorflow.keras.layers import BatchNormalization
 from keras.layers import Dropout
+
 
 
 def R_squared(y, y_pred):
@@ -3217,7 +3285,9 @@ def R_squared(y, y_pred):
 #R_squared(y_test, test_preds)
 
 
-# In[149]:
+
+
+# In[ ]:
 
 
 
@@ -3266,13 +3336,16 @@ def first_deep(data,size,lr,batch,epoch):
     return R2_train_set,R2_test_set,x_train , x_test , y_train , y_test,y_pred_train,y_pred_test
 
 
-# In[150]:
+# In[ ]:
 
 
 #first_deep(BWDPS,.15,0.001,16,100)
 
 
-# In[151]:
+
+
+# In[ ]:
+
 
 
 def first_deep2(data,size,lr,batch,epoch):
@@ -3322,7 +3395,8 @@ def first_deep2(data,size,lr,batch,epoch):
     return R2_train_set,R2_test_set,x_train , x_test , y_train , y_test,y_pred_train,y_pred_test
 
 
-# In[152]:
+# In[ ]:
+
 
 
 def first_deep3(data,size,lr,batch,epoch):
@@ -3374,7 +3448,7 @@ def first_deep3(data,size,lr,batch,epoch):
     return R2_train_set,R2_test_set,x_train , x_test , y_train , y_test,y_pred_train,y_pred_test
 
 
-# In[153]:
+# In[ ]:
 
 
 def deep_train1(dataset,k,size,lr,batch):
@@ -3479,14 +3553,16 @@ def deep_train1(dataset,k,size,lr,batch):
     
 
 
-# In[154]:
+# In[ ]:
 
 
 deep_train1(BWDPS_shuffled,4,0.15,.00015,16)
+
+
 # ## MLP deep models
 
-
 # In[155]:
+
 
 
 def mlp1(data,size,lr,batch):
@@ -3560,43 +3636,149 @@ def mlp1(data,size,lr,batch):
     plt.show()
 
 
-# In[156]:
+# In[154]:
 
 
 #mlp1(BWDPS,.15,0.0001,4)
 
 
-# In[157]:
 
 
-mlp1(BWDPS,.15,0.0001,4)
+
 
 
 # In[160]:
 
 
+mlp1(BWDPS,.15,0.0001,4)
+
+
+# In[216]:
+
+
+#for BWDPS mlp1
+
+
+train_df=[0.7573,0.7656,0.7180,0.7434,0.7490,0.7536,0.6946]
+train_df=np.array(train_df)
+print(train_df.mean())
+print(train_df.std())
+
+print()
+test_df=[0.7380,0.7583,0.7227,0.7221,0.7393,.7461,0.7388]
+test_df=np.array(test_df)
+print(test_df.mean())
+print(test_df.std())
+
+
+
+
+# In[217]:
+
+
+#for BWDPS_shuffled
+
+
+train_df=[0.6985,0.7301,0.7189,0.7294,0.7330,0.7533,0.7195]
+train_df=np.array(train_df)
+print(train_df.mean())
+print(train_df.std())
+
+print()
+test_df=[0.7551,0.7180,0.7194,0.6927,0.7160,0.7128,0.6917]
+test_df=np.array(test_df)
+print(test_df.mean())
+print(test_df.std())
+
+
+
+
+# In[169]:
+
+
 #mlp1(BWDPS_shuffled,.15,0.0001,4)
 
 
-# In[161]:
+# In[168]:
 
 
 mlp1(BWDPS_shuffled,.15,0.0001,4)
 
 
-# In[164]:
+
+
+# In[218]:
+
+
+#for dfss0_shuffled
+
+
+train_df=[0.9008,0.900,0.8849,0.8881,0.8965,0.8990,0.9061]
+train_df=np.array(train_df)
+print(train_df.mean())
+print(train_df.std())
+
+print()
+test_df=[0.7551,0.7218,0.7630,0.7157,0.7103,0.7539,0.7532]
+test_df=np.array(test_df)
+print(test_df.mean())
+print(test_df.std())
+
+
+
+# In[175]:
+
+
+#mlp1(BWDPS_38_shuffled,.15,0.0001,4)
+
+
+# In[176]:
 
 
 mlp1(BWDPS_38_shuffled,.15,0.0001,4)
 
 
-# In[167]:
+# In[ ]:
+
+
+
+
+
+
+
+# In[219]:
+
+
+#for dfss_shuffled
+
+
+train_df=[0.9175,0.9169,0.9067,0.9113,0.9061,0.9118,0.9166]
+train_df=np.array(train_df)
+print(train_df.mean())
+print(train_df.std())
+
+print()
+test_df=[0.7200,0.7842,0.7020,0.7157,0.7175,0.7444,0.6464]
+test_df=np.array(test_df)
+print(test_df.mean())
+print(test_df.std())
+
+
+# In[182]:
+
+
+#mlp1(BWDPS_46_shuffled,.15,0.0001,4)
+
+
+# In[183]:
 
 
 mlp1(BWDPS_46_shuffled,.15,0.0001,4)
 
 
-# In[168]:
+
+# In[189]:
+
 
 
 def mlp2(data,size,lr,batch):
@@ -3672,19 +3854,126 @@ def mlp2(data,size,lr,batch):
     plt.show()
 
 
-# In[173]:
+# In[187]:
+
+
+# In[194]:
+
+
+mlp2(BWDPS,.15,0.0001,4)
+
+
+# In[220]:
+
+
+#for BWDPS mlp2
+
+
+train_df=[0.5206,0.7178,0.7076,0.7276,0.7590,0.6078,0.7577]
+train_df=np.array(train_df)
+print(train_df.mean())
+print(train_df.std())
+
+print()
+test_df=[0.5448,0.6962,0.7241,0.6056,0.7436,0.5463,0.7233]
+test_df=np.array(test_df)
+print(test_df.mean())
+print(test_df.std())
+
+
+
+# In[199]:
+
+
+#mlp2(BWDPS_shuffled,.15,0.0001,4)
+
+
+# In[221]:
+
+
+#for BWDPS_shuffled mlp2
+
+train_df=[0.7689,0.7091,0.7384,0.7022,0.5378,0.7152,0.7555]
+train_df=np.array(train_df)
+print(train_df.mean())
+print(train_df.std())
+
+print()
+test_df=[0.7113,0.7066,0.7163,0.7143,0.4223,0.6229,0.7164]
+test_df=np.array(test_df)
+print(test_df.mean())
+print(test_df.std())
+
+
+# In[200]:
 
 
 mlp2(BWDPS_shuffled,.15,0.0001,4)
 
 
-# In[176]:
+
+
+# In[206]:
+
+
+#mlp2(BWDPS_38_shuffled,.15,0.0001,4)
+
+
+# In[222]:
+
+
+#for BWDPS_38_shuffled mlp2
+
+
+train_df=[0.9097,0.9085,0.9238,0.9110,0.9116,0.9101,0.9125]
+train_df=np.array(train_df)
+print(train_df.mean())
+print(train_df.std())
+
+print()
+test_df=[0.7280,0.7135,0.7952,0.8000,0.7651,0.7800,0.5928]
+test_df=np.array(test_df)
+print(test_df.mean())
+print(test_df.std())
+
+
+
+# In[208]:
 
 
 mlp2(BWDPS_38_shuffled,.15,0.0001,4)
 
 
-# In[179]:
+
+
+# In[212]:
+
+
+#mlp2(BWDPS_46_shuffled,.15,0.0001,4)
+
+
+# In[223]:
+
+
+#for BWDPS_46_shuffled mlp2
+
+
+
+train_df=[0.9425,0.9404,0.9373,0.9367,0.9335,0.9460,0.9353]
+train_df=np.array(train_df)
+print(train_df.mean())
+print(train_df.std())
+
+print()
+test_df=[0.7249,0.7474,0.8283,0.7815,0.7351,0.6155,0.7005]
+test_df=np.array(test_df)
+print(test_df.mean())
+print(test_df.std())
+
+
+
+
+# In[215]:
 
 
 mlp2(BWDPS_46_shuffled,.15,0.0001,4)
@@ -3692,8 +3981,7 @@ mlp2(BWDPS_46_shuffled,.15,0.0001,4)
 
 # ## BWDPS_46 models
 
-
-# In[180]:
+# In[228]:
 
 
 from sklearn.preprocessing import StandardScaler
@@ -3752,13 +4040,20 @@ def BWDPS_46_1(dataset, size, lr, batch, epoch):
 
 
 
-# In[181]:
+
+# In[229]:
 
 
 #LSTM_1(BWDPS_38_shuffled,.15,.001,16,40)
 
 
-# In[182]:
+# In[ ]:
+
+
+
+
+
+# In[224]:
 
 
 def conv_lstm(data,size,lr,batch,epoch):
@@ -3845,13 +4140,14 @@ def conv_lstm(data,size,lr,batch,epoch):
     plt.legend()
 
 
-# In[183]:
+
+# In[ ]:
 
 
 #conv_lstm(BWDPS,.15,.0001,4,40)
 
 
-# In[184]:
+# In[ ]:
 
 
 #for BWDPS lstm
@@ -3869,7 +4165,7 @@ print(test_df.mean())
 print(test_df.std())
 
 
-# In[185]:
+# In[ ]:
 
 
 def plot_history(hist):
@@ -3904,8 +4200,7 @@ def plot_history(hist):
 
 # ## Convolutional deep models
 
-
-# In[186]:
+# In[396]:
 
 
 def deep_conv12(dataset,size,lr,batch):
@@ -3963,24 +4258,23 @@ def deep_conv12(dataset,size,lr,batch):
     return score
 
 
-# In[187]:
+# In[232]:
 
 
 deep_conv12(BWDPS_shuffled,.15,.0001,4)
 
 
-# In[189]:
+# In[ ]:
+
+
+#deep_conv12(BWDPS_shuffled,.15,.0001,4)
+
+
+# In[397]:
+
 
 
 def deep_conv2(dataset, test_size, lr, batch_size):
-    '''The deep_conv2 function performs deep learning regression using Convolutional Neural Networks (CNNs)
-    on structured data. This function applies Conv1D layers to a structured dataset for regression. 
-    It scales the data using StandardScaler, reshapes it for CNN compatibility, and then splits it into 
-    training and test sets. The function constructs a neural network with Conv1D and Dense layers, compiles it
-    , and trains it on the training data. It evaluates the model's performance on both the test and 
-    training sets, calculates metrics like Mean Squared Error (MSE) and R-squared, and visualizes loss 
-    and predicted vs. original values. The function returns the R-squared score on the test set, 
-    R-squared score on the training set, and the standard deviation of predictions on the test set.'''
     
     X=dataset.drop(['CO2 uptake (mmol/g)'],axis=1)
     y=dataset['CO2 uptake (mmol/g)']
@@ -4049,19 +4343,177 @@ def deep_conv2(dataset, test_size, lr, batch_size):
     return score, scoretr, std
 
 
-# In[191]:
+# In[405]:
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import StandardScaler
+from sklearn.ensemble import BaggingRegressor
+
+
+class CNNKerasRegressor(KerasRegressor):
+    def fit(self, *args, **kwargs):
+        if len(args) > 0:
+            x = args[0]
+            if len(x.shape) == 2:  # if 2D, reshape to 3D
+                x = x.reshape((x.shape[0], x.shape[1], 1))
+            args = (x,) + args[1:]
+        super().fit(*args, **kwargs)
+
+    def predict(self, *args, **kwargs):
+        if len(args) > 0:
+            x = args[0]
+            if len(x.shape) == 2:  # if 2D, reshape to 3D
+                x = x.reshape((x.shape[0], x.shape[1], 1))
+            args = (x,) + args[1:]
+        return super().predict(*args, **kwargs)
+
+def build_model(input_shape, lr):
+    modified_input_shape = (input_shape[0], 1)
+
+    model = Sequential()
+    model.add(Conv1D(input_shape[0], 1, activation="relu", input_shape=modified_input_shape))
+    model.add(Flatten())
+    model.add(Dense(input_shape[0], activation="relu"))
+    model.add(Dense(1))
+    optimizer = keras.optimizers.Adam(learning_rate=lr)
+    model.compile(loss="mse", optimizer=optimizer)
+    return model
+
+
+def deep_conv2_main(dataset, test_size, lr, batch_size, n_estimators=10, max_samples=1.0):
+
+    X = dataset.drop(['CO2 uptake (mmol/g)'],axis=1)
+    y = dataset['CO2 uptake (mmol/g)']
+
+    scaler = StandardScaler()
+    X_scaled = scaler.fit_transform(X)
+    y_scaled = (y - y.mean()) / y.std()
+
+    X_train, X_test, y_train, y_test = train_test_split(X_scaled, y_scaled, test_size=test_size, random_state=42)
+
+    keras_regressor = CNNKerasRegressor(build_fn=build_model, input_shape=X_train.shape[1:], lr=lr,
+                                        batch_size=batch_size, epochs=120, verbose=0)
+
+    model = BaggingRegressor(base_estimator=keras_regressor, n_estimators=n_estimators,
+                             max_samples=max_samples, verbose=1)
+    model.fit(X_train, y_train)
+
+    y_pred = model.predict(X_test)
+
+    print("MSE_test: %.4f" % mean_squared_error(y_test, y_pred))
+    score = r2_score(y_test, y_pred)
+    print("r2_test: %.4f" % score)
+
+    y_pred_train = model.predict(X_train)
+    print("MSE_train: %.4f" % mean_squared_error(y_train, y_pred_train))
+    score_train = r2_score(y_train, y_pred_train)
+    print("r2_train: %.4f" % score_train)
+
+    std = np.std(y_test - y_pred)
+    print("Standard deviation of predictions on test set: %.4f" % std)
+
+    
+
+    return score, score_train, std
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[234]:
 
 
 deep_conv2(BWDPS,.15,0.0001,4)
 
 
-# In[196]:
+
+# In[ ]:
+
+
+
+
+
+# In[236]:
+
+
+deep_conv2(BWDPS,.1,0.0001,4)
+
+
+
+# In[240]:
+
+
+#deep_conv2(BWDPS,.1,0.0001,4)
+
+
+# In[ ]:
+
+
+train_df=[0.7880,0.7669,0.7928,0.7975,0.7756,0.7934,0.8035]
+train_df=np.array(train_df)
+print(train_df.mean())
+print(train_df.std())
+
+print()
+test_df=[0.7458,0.7362,0.7772,0.7288,0.7315,0.7366,0.7407]
+test_df=np.array(test_df)
+print(test_df.mean())
+print(test_df.std())
+
+
+# In[ ]:
+
+
+#deep_conv2(BWDPS,.1,0.0001,4)
+
+
+
+
+# In[400]:
 
 
 deep_conv2(BWDPS_shuffled,.15,0.0001,4)
 
 
-# In[199]:
+# In[ ]:
+
+
+
+
+
+
+
+# In[ ]:
+
+
+#deep_conv2(BWDPS_shuffled,.1,0.0001,4)
+
+
+# In[ ]:
+
+
+train_BWDPS_shuffled=[0.7732,0.7772,0.7715,0.7606,0.7982,0.7377,0.7452]
+train_BWDPS_shuffled=np.array(train_BWDPS_shuffled)
+print(train_BWDPS_shuffled.mean())
+print(train_BWDPS_shuffled.std())
+
+print()
+test_df_shuffled=[0.8277,0.8331,0.8184,0.8167,0.8189,0.8044,0.8067]
+test_df_shuffled=np.array(test_df_shuffled)
+print(test_df_shuffled.mean())
+print(test_df_shuffled.std())
+
+
+
+
+# In[ ]:
 
 
 deep_conv2(BWDPS_38_shuffled,.15,0.0001,4)
@@ -4073,28 +4525,75 @@ deep_conv2(BWDPS_38_shuffled,.15,0.0001,4)
 
 
 
-
-# In[200]:
-
-
+# In[ ]:
 
 
 #deep_conv2(BWDPS_38_shuffled,.15,0.0001,4)
 
 
-# In[202]:
+# In[ ]:
+
+
+train_BWDPS_38_shuffled=[0.8962,0.8904,0.8944,0.8895,0.9025,0.8900,0.8984]
+train_BWDPS_38_shuffled=np.array(train_BWDPS_38_shuffled)
+print(train_BWDPS_38_shuffled.mean())
+print(train_BWDPS_38_shuffled.std())
+
+print()
+test_BWDPS_38_shuffled=[0.8770,0.8604,0.8536,0.8382,0.8435,0.8411,0.8671]
+test_BWDPS_38_shuffled=np.array(test_BWDPS_38_shuffled)
+print(test_BWDPS_38_shuffled.mean())
+print(test_BWDPS_38_shuffled.std())
+
+
+
+# In[245]:
 
 
 deep_conv2(BWDPS_46_shuffled,.15,0.0001,4)
 
 
-# In[203]:
+# In[ ]:
+
+
+
+
+
+
+
+
+# In[ ]:
 
 
 #deep_conv2(BWDPS_46_shuffled,.15,0.0001,4)
 
 
-# In[206]:
+# In[ ]:
+
+
+train_BWDPS_46_shuffled=[0.9262,0.9325,0.9347,0.9171,0.9319,0.9298,0.9317]
+train_BWDPS_46_shuffled=np.array(train_BWDPS_46_shuffled)
+print(train_BWDPS_46_shuffled.mean())
+print(train_BWDPS_46_shuffled.std())
+
+print()
+test_BWDPS_46_shuffled=[0.8458,0.8392,0.8386,0.8396,0.8400,0.8443,0.8386]
+test_BWDPS_46_shuffled=np.array(test_BWDPS_46_shuffled)
+print(test_BWDPS_46_shuffled.mean())
+print(test_BWDPS_46_shuffled.std())
+
+
+
+
+# In[ ]:
+
+
+deep_conv2(BWDPS_46_shuffled,.15,0.0001,4)
+
+
+
+
+# In[ ]:
 
 
 def deep_conv22(dataset,i,j,k):
@@ -4136,6 +4635,11 @@ def deep_conv22(dataset,i,j,k):
 
     print("Train MSE: %.4f" % mean_squared_error(ytrain, ypred_train))
     
+    
+
+    
+    
+    
     ypred = model.predict(xtest)
     print(model.evaluate(xtrain, ytrain))
     print("Test MSE: %.4f" % mean_squared_error(ytest, ypred))
@@ -4163,13 +4667,28 @@ def deep_conv22(dataset,i,j,k):
     return score
 
 
-# In[208]:
+
+
+# In[ ]:
+
+
+std_cnn=np.array([0.8578,0.8429,0.8451,0.8279,0.8190])
+std_cnn.std()
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
 
 
 #deep_conv22(BWDPS_38_shuffled,.15,0.0001,4)
 
 
-# In[209]:
+# In[ ]:
 
 
 def deep_conv23(dataset, test_size, lr, batch_size):
@@ -4221,13 +4740,14 @@ def deep_conv23(dataset, test_size, lr, batch_size):
     return r2_test
 
 
-# In[210]:
+# In[ ]:
 
 
 #deep_conv23(BWDPS_46_shuffled,.15,0.0001,4)
 
 
-# In[211]:
+# In[ ]:
+
 
 
 def deep_conv24(dataset, test_size, lr, batch_size):
@@ -4299,19 +4819,19 @@ def deep_conv24(dataset, test_size, lr, batch_size):
     return score, scoretr, std
 
 
-# In[212]:
+# In[ ]:
 
 
 #deep_conv24(BWDPS_46_shuffled,.15,0.0001,4)
 
 
-# In[213]:
+# In[ ]:
 
 
 deep_conv2(BWDPS_38_shuffled,.15,0.0001,4)
 
 
-# In[214]:
+# In[ ]:
 
 
 def deep_conv2_oplot(dataset, test_size, lr, batch_size):
@@ -4385,13 +4905,13 @@ def deep_conv2_oplot(dataset, test_size, lr, batch_size):
     return score, scoretr, std
 
 
-# In[215]:
+# In[ ]:
 
 
 #deep_conv2_oplot(BWDPS_38_shuffled,.15,0.0001,4)
 
 
-# In[216]:
+# In[ ]:
 
 
 def deep_conv2_oplot_mse(dataset, test_size, lr, batch_size):
@@ -4468,10 +4988,7 @@ def deep_conv2_oplot_mse(dataset, test_size, lr, batch_size):
     return score, scoretr, std
 
 
-# In[217]:
-
-
+# In[ ]:
 
 deep_conv2_oplot_mse(BWDPS_38_shuffled,.15,0.0001,4)
 deep_conv2_oplot_mse(BWDPS_38_shuffled,.15,0.0001,4)
-
